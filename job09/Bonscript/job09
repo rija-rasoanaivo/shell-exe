@@ -1,0 +1,21 @@
+#!/bin/bash
+
+csv_file="Shell_Userlist.csv"
+
+declare -a Id
+declare -a Prenom
+declare -a Nom
+declare -a Mdp
+declare -a Role
+
+while IFS=, read -r COL1 COL2 COL3 COL4 COL5; do
+    Id+=("$COL1")
+    Prenom+=("$COL2")
+    Nom+=("$COL3")
+    Mdp+=("$COL4")
+    Role+=("$COL5")
+done < "$csv_file"
+
+for index in "${!Id[@]}"; do
+    useradd -m "${Prenom[$index]}_${Nom[$index]}" -u "${Id[$index]}" 
+done
